@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Slope",
+    "url": "https://example.com/slope-embed",
+    "thumb": "https://via.placeholder.com/150",
+    "category": "Running"
+  },
+  {
+    "title": "Retro Bowl",
+    "url": "https://example.com/retro-bowl-embed",
+    "thumb": "https://via.placeholder.com/150",
+    "category": "Sports"
+  }
+]
