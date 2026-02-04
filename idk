@@ -1,0 +1,70 @@
+// Selecting DOM elements
+const gameContainer = document.getElementById('game-container');
+const searchInput = document.getElementById('search');
+const modal = document.getElementById('modal');
+const iframe = document.getElementById('game-frame');
+const closeBtn = document.getElementById('close-btn');
+
+let allGames = [];
+
+/**
+ * Fetches the game list from the JSON file.
+ */
+async function init() {
+    try {
+        const response = await fetch('games.json');
+        allGames = await response.json();
+        renderGames(allGames);
+    } catch (error) {
+        console.error("Failed to load games:", error);
+    }
+}
+
+/**
+ * Renders the game cards into the grid.
+ */
+function renderGames(gamesList) {
+    gameContainer.innerHTML = ''; // Clear current grid
+
+    gamesList.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            
+            
+                ${game.title}
+                ${game.category}
+            
+        `;
+        
+        // When clicked, open the iframe modal
+        card.onclick = () => {
+            iframe.src = game.url;
+            modal.style.display = 'flex';
+        };
+
+        gameContainer.appendChild(card);
+    });
+}
+
+/**
+ * Filter games based on search input
+ */
+searchInput.oninput = (e) => {
+    const term = e.target.value.toLowerCase();
+    const filtered = allGames.filter(g => 
+        g.title.toLowerCase().includes(term)
+    );
+    renderGames(filtered);
+};
+
+/**
+ * Close modal and clear iframe to stop music/processing
+ */
+closeBtn.onclick = () => {
+    modal.style.display = 'none';
+    iframe.src = ''; 
+};
+
+// Run the script
+init();
